@@ -34,13 +34,19 @@ export default function RegisterForm() {
     return regex.test(password);
   };
 
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
+const handleChange = (
+  e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>
+) => {
+  const { name, value, type } = e.target;
+  const checked =
+    type === "checkbox" && "checked" in e.target ? e.target.checked : false;
 
-    if (!formData.agree) {
-      alert("You must agree to the terms and conditions.");
-      return;
-    }
+  setFormData({
+    ...formData,
+    [name]: type === "checkbox" ? checked : value,
+  });
+};
+
 
     if (!validatePassword(formData.password)) {
       alert(
