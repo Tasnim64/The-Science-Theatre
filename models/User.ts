@@ -1,23 +1,24 @@
-// /models/User.ts
-import mongoose, { Schema, model, models } from "mongoose";
+import mongoose, { Schema, models, model } from "mongoose";
 
-const UserSchema = new Schema({
-  firstName: { type: String, required: true, trim: true },
-  lastName: { type: String, required: true, trim: true },
-  dob: { type: String, required: true }, // store as string "YYYY-MM-DD" or DD/MM/YYYY if you prefer
-  institution: { type: String, required: true, trim: true },
-  gender: { type: String, required: true },
-  address: { type: String, required: true, trim: true },
-  district: { type: String, required: true, trim: true },
-  thana: { type: String, trim: true },
-  postalCode: { type: String, trim: true },
-  fatherName: { type: String, trim: true },
-  motherName: { type: String, trim: true },
-  guardianContact: { type: String, required: true, trim: true },
-  email: { type: String, required: true, unique: true, lowercase: true, trim: true },
-  password: { type: String, required: true },
-  createdAt: { type: Date, default: Date.now }
-});
+const userSchema = new Schema(
+  {
+    firstName: { type: String, required: true },
+    lastName: { type: String, required: true },
+    dob: { type: String, required: true },
+    institution: { type: String, required: true },
+    gender: { type: String, required: true },
+    address: { type: String, required: true },
+    district: { type: String, required: true },
+    thana: String,
+    postalCode: String,
+    fatherName: String,
+    motherName: String,
+    guardianContact: { type: String, required: true },
+    email: { type: String, required: true, unique: true },
+    password: { type: String, required: true },
+  },
+  { timestamps: true }
+);
 
-const User = models.User || model("User", UserSchema);
+const User = models.User || model("User", userSchema);
 export default User;

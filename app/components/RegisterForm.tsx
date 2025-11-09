@@ -21,44 +21,24 @@ export default function RegisterForm() {
     agree: false,
   });
 
-const handleChange = (
-  e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>
-) => {
-  const target = e.target;
-  const value =
-    target instanceof HTMLInputElement && target.type === "checkbox"
-      ? target.checked
-      : target.value;
-  const name = target.name;
-  setFormData({ ...formData, [name]: value });
-};
-
+  const handleChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>
+  ) => {
+    const target = e.target as HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement;
+    const { name, value, type, checked } = target;
+    setFormData({ ...formData, [name]: type === "checkbox" ? checked : value });
+  };
 
   const validatePassword = (password: string) => {
-    const regex =
-      /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*()_+\-={}[\]|:;"'<>,.?/]).{8,}$/;
-    return regex.test(password);
+    return /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*()_+\-={}[\]|:;"'<>,.?/]).{8,}$/.test(password);
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
-    if (!formData.agree) {
-      alert("You must agree to the terms and conditions.");
-      return;
-    }
-
-    if (!validatePassword(formData.password)) {
-      alert(
-        "Password must be at least 8 characters long, contain uppercase, lowercase, number, and special character."
-      );
-      return;
-    }
-
-    if (formData.password !== formData.confirmPassword) {
-      alert("Passwords do not match!");
-      return;
-    }
+    if (!formData.agree) return alert("You must agree to the terms and conditions.");
+    if (!validatePassword(formData.password)) return alert("Password must contain uppercase, lowercase, number, special character, and at least 8 chars.");
+    if (formData.password !== formData.confirmPassword) return alert("Passwords do not match!");
 
     try {
       const res = await fetch("/api/register", {
@@ -70,7 +50,6 @@ const handleChange = (
       const data = await res.json();
       if (data.success) {
         alert("✅ Registration successful!");
-
         setFormData({
           firstName: "",
           lastName: "",
@@ -100,206 +79,64 @@ const handleChange = (
 
   return (
     <div className="max-w-3xl mx-auto bg-[#0d002e]/60 border border-[#a200ff33] text-[#d4bfff] rounded-xl p-8 backdrop-blur-md shadow-neon">
-      <h2 className="text-3xl font-bold mb-6 text-center">
-        Science Theatre Registration
-      </h2>
+      <h2 className="text-3xl font-bold mb-6 text-center">Science Theatre Registration</h2>
 
       <form onSubmit={handleSubmit} className="space-y-4">
-        {/* Name */}
         <div className="grid sm:grid-cols-2 gap-4">
-          <input
-            type="text"
-            name="firstName"
-            placeholder="First Name "
-            value={formData.firstName}
-            onChange={handleChange}
-            required
-            className="form-input"
-          />
-          <input
-            type="text"
-            name="lastName"
-            placeholder="Last Name "
-            value={formData.lastName}
-            onChange={handleChange}
-            required
-            className="form-input"
-          />
+          <input type="text" name="firstName" placeholder="First Name" value={formData.firstName} onChange={handleChange} required className="form-input"/>
+          <input type="text" name="lastName" placeholder="Last Name" value={formData.lastName} onChange={handleChange} required className="form-input"/>
         </div>
 
-        {/* Date of Birth */}
-        <input
-          type="date"
-          name="dob"
-          value={formData.dob}
-          onChange={handleChange}
-          required
-          className="form-input"
-        />
-
-        {/* Institution */}
-        <select
-          name="institution"
-          value={formData.institution}
-          onChange={handleChange}
-          required
-          className="form-input"
-        >
-          <option value="">Select Institution </option>
+        <input type="date" name="dob" value={formData.dob} onChange={handleChange} required className="form-input"/>
+        
+        <select name="institution" value={formData.institution} onChange={handleChange} required className="form-input">
+          <option value="">Select Institution</option>
           <option value="BRAC University">BRAC University</option>
           <option value="BUET">BUET</option>
           <option value="DU">University of Dhaka</option>
           <option value="Other">Other</option>
         </select>
 
-        {/* Gender */}
-        <select
-          name="gender"
-          value={formData.gender}
-          onChange={handleChange}
-          required
-          className="form-input"
-        >
-          <option value="">Select Gender </option>
+        <select name="gender" value={formData.gender} onChange={handleChange} required className="form-input">
+          <option value="">Select Gender</option>
           <option value="Male">Male</option>
           <option value="Female">Female</option>
           <option value="Other">Other</option>
         </select>
 
-        {/* Address Section */}
-        <textarea
-          name="address"
-          placeholder="Present Address "
-          value={formData.address}
-          onChange={handleChange}
-          required
-          className="form-input h-20"
-        ></textarea>
+        <textarea name="address" placeholder="Present Address" value={formData.address} onChange={handleChange} required className="form-input h-20"></textarea>
 
         <div className="grid sm:grid-cols-2 gap-4">
-          <input
-            type="text"
-            name="district"
-            placeholder="District "
-            value={formData.district}
-            onChange={handleChange}
-            required
-            className="form-input"
-          />
-          <input
-            type="text"
-            name="thana"
-            placeholder="Thana / Upazila"
-            value={formData.thana}
-            onChange={handleChange}
-            className="form-input"
-          />
+          <input type="text" name="district" placeholder="District" value={formData.district} onChange={handleChange} required className="form-input"/>
+          <input type="text" name="thana" placeholder="Thana / Upazila" value={formData.thana} onChange={handleChange} className="form-input"/>
         </div>
 
-        <input
-          type="text"
-          name="postalCode"
-          placeholder="Postal Code"
-          value={formData.postalCode}
-          onChange={handleChange}
-          className="form-input"
-        />
-
-        {/* Guardian Info */}
-        <input
-          type="text"
-          name="fatherName"
-          placeholder="Father's Name"
-          value={formData.fatherName}
-          onChange={handleChange}
-          className="form-input"
-        />
-
-        <input
-          type="text"
-          name="motherName"
-          placeholder="Mother's Name"
-          value={formData.motherName}
-          onChange={handleChange}
-          className="form-input"
-        />
-
-        <input
-          type="text"
-          name="guardianContact"
-          placeholder="Guardian Contact Number "
-          value={formData.guardianContact}
-          onChange={handleChange}
-          required
-          className="form-input"
-        />
-
-        {/* Email & Password */}
-        <input
-          type="email"
-          name="email"
-          placeholder="Email Address "
-          value={formData.email}
-          onChange={handleChange}
-          required
-          className="form-input"
-        />
+        <input type="text" name="postalCode" placeholder="Postal Code" value={formData.postalCode} onChange={handleChange} className="form-input"/>
+        <input type="text" name="fatherName" placeholder="Father's Name" value={formData.fatherName} onChange={handleChange} className="form-input"/>
+        <input type="text" name="motherName" placeholder="Mother's Name" value={formData.motherName} onChange={handleChange} className="form-input"/>
+        <input type="text" name="guardianContact" placeholder="Guardian Contact Number" value={formData.guardianContact} onChange={handleChange} required className="form-input"/>
+        <input type="email" name="email" placeholder="Email Address" value={formData.email} onChange={handleChange} required className="form-input"/>
 
         <div className="grid sm:grid-cols-2 gap-4">
-          <input
-            type="password"
-            name="password"
-            placeholder="Password "
-            value={formData.password}
-            onChange={handleChange}
-            required
-            className="form-input"
-          />
-          <input
-            type="password"
-            name="confirmPassword"
-            placeholder="Confirm Password "
-            value={formData.confirmPassword}
-            onChange={handleChange}
-            required
-            className="form-input"
-          />
+          <input type="password" name="password" placeholder="Password" value={formData.password} onChange={handleChange} required className="form-input"/>
+          <input type="password" name="confirmPassword" placeholder="Confirm Password" value={formData.confirmPassword} onChange={handleChange} required className="form-input"/>
         </div>
 
-        {/* Terms */}
         <div className="flex items-center space-x-2 mt-2">
-          <input
-            type="checkbox"
-            name="agree"
-            checked={formData.agree}
-            onChange={handleChange}
-            className="w-4 h-4 accent-[#a200ff]"
-          />
-          <label className="text-sm">
-            I agree to the{" "}
-            <a href="#" className="text-[#a200ff] underline">
-              Terms and Conditions
-            </a>
-          </label>
+          <input type="checkbox" name="agree" checked={formData.agree} onChange={handleChange} className="w-4 h-4 accent-[#a200ff]"/>
+          <label className="text-sm">I agree to the <a href="#" className="text-[#a200ff] underline">Terms and Conditions</a></label>
         </div>
 
-        {/* Submit */}
-        <button
-          type="submit"
-          className="w-full py-3 rounded-lg neon-btn text-lg font-bold tracking-widest uppercase mt-4"
-        >
-          Register
-        </button>
+        <button type="submit" className="w-full py-3 rounded-lg neon-btn text-lg font-bold tracking-widest uppercase mt-4">Register</button>
       </form>
 
-      {/* Custom Tailwind Component Styles */}
       <style jsx>{`
         .form-input {
           width: 100%;
           padding: 0.6rem 1rem;
           border-radius: 0.5rem;
           background: rgba(26, 0, 51, 0.5);
-          border: 1px solid rgba(162, 0, 255, 0.4);
+          border: 1px solid rgba(162,0,255,0.4);
           color: #d4bfff;
           outline: none;
           transition: 0.2s;
