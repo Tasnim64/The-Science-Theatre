@@ -1,0 +1,93 @@
+@import "tailwindcss";
+@plugin "daisyui";
+
+
+html {
+  scroll-behavior: smooth;
+}
+
+@keyframes moveBackground {
+  from { background-position: 50% 50%; }
+  to { background-position: 55% 45%; }
+}
+
+body {
+  background: url("/web.png") no-repeat center center fixed;
+  background-size: cover;
+  background-blend-mode: screen;
+  color: #d4bfff; /* violet text */
+  font-family: 'Orbitron', sans-serif;
+  min-height: 100vh;
+  line-height: 1.6;
+  animation: moveBackground 20s ease-in-out infinite alternate;
+  padding: 0 0.5rem;
+}
+
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  background: radial-gradient(circle at 30% 70%, #2a005580 0%, #000 80%);
+  z-index: -1;
+}
+
+h1, h2, h3, h4 {
+  color: #d9c7f6;
+  text-shadow: 0 0 12px #b301ff, 0 0 24px #ff00ff;
+  margin-bottom: 0.75rem;
+}
+
+p, li, span {
+  color: #e3e1f2;
+}
+
+/* Neon button glow */
+.neon-btn {
+  border: 2px solid #a200ff;
+  color: #a200ff;
+  background: transparent;
+  padding: 0.5rem 1rem;
+  border-radius: 0.5rem;
+  transition: all 0.3s ease-in-out;
+}
+.neon-btn:hover {
+  box-shadow: 0 0 15px #a200ff, 0 0 30px #ff00ff;
+  background: #a200ff20;
+}
+
+/* Neon card */
+.neon-card {
+  border: 2px solid #8a00ff;
+  box-shadow: 0 0 20px #8a00ff70;
+  background-color: rgba(0, 0, 0, 0.5);
+  backdrop-filter: blur(8px);
+  border-radius: 1rem;
+  padding: 1rem;
+}
+
+/* Extra glow utilities */
+.neon-border {
+  border: 2px solid #a200ff;
+  box-shadow: 0 0 15px #a200ff80, 0 0 30px #ff00ff40;
+  background: rgba(10, 0, 20, 0.6);
+  backdrop-filter: blur(10px);
+  border-radius: 1rem;
+  padding: 1rem;
+}
+
+.gradient-text {
+  background: linear-gradient(90deg, #eee8f1, #af8cdd, #ff00f7);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+@keyframes scroll {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+
+.animate-scroll {
+  display: flex;
+  width: max-content;
+  animation: scroll 20s linear infinite;
+}
