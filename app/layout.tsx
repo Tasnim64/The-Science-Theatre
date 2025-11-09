@@ -6,8 +6,8 @@ import Footer from "./components/Footer";
 export const metadata: Metadata = {
   title: "Science Theatre",
   description: "SCIENCE COMMUNICATION COMPETITION",
-  icons: { 
-    icon: "/STFAVICON.ico",
+  icons: {
+    icon: "/STICON.ico",
   },
 };
 
@@ -16,12 +16,15 @@ export default function RootLayout({
 }: Readonly<{ children: React.ReactNode }>) {
   return (
     <html lang="en" data-theme="dark">
+
       <head>
         {/* Inter font from Google Fonts */}
         <link
           href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"
           rel="stylesheet"
         />
+        <link rel="icon" href="/STICON.ico?v=2" />
+
       </head>
 
       <body className="bg-[#050505] text-[#c0b3ff] font-[Inter,sans-serif] antialiased tracking-wide leading-relaxed">

@@ -26,7 +26,7 @@ export default function PartnersSponsors({
               rel="noopener noreferrer"
               className="flex-shrink-0 transition-transform duration-500 hover:scale-110"
             >
-              <div className="h-25 w-25 rounded-full bg-[#1a002255] border-2 border-[#a200ff55] flex items-center justify-center shadow-[0_0_30px_#a200ff33] hover:shadow-[0_0_40px_#a200ffcc] transition-all duration-500">
+              <div className="h-30 w-30 rounded-full bg-[#1a002255] border-2 border-[#a200ff55] flex items-center justify-center shadow-[0_0_30px_#a200ff33] hover:shadow-[0_0_40px_#a200ffcc] transition-all duration-500">
                 <img
                   src={logo.src}
                   alt="logo"

@@ -7,9 +7,9 @@ import RegisterForm from "./components/RegisterForm";
 import PartnersSponsors from "./components/PartnersSponsors";
 
 const partnerLogos = [
-  { src: "/onushonditshu.jpeg", href: "https://partner1.com" },
+  { src: "/onushonditshu.jpg", href: "https://partner1.com" },
   { src: "/BRACU.png", href: "https://www.bracu.ac.bd" },
-  { src: "/logos/partner3.png", href: "https://partner3.com" },
+  { src: "/Diganta.jpg", href: "https://www.facebook.com/profile.php?id=61574161791951" },
 ];
 
 const sponsorLogos = [
