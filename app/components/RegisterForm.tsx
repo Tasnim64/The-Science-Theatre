@@ -21,12 +21,18 @@ export default function RegisterForm() {
     agree: false,
   });
 
-  const handleChange = (
-    e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>
-  ) => {
-    const { name, value, type, checked } = e.target;
-    setFormData({ ...formData, [name]: type === "checkbox" ? checked : value });
-  };
+const handleChange = (
+  e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>
+) => {
+  const target = e.target;
+  const value =
+    target instanceof HTMLInputElement && target.type === "checkbox"
+      ? target.checked
+      : target.value;
+  const name = target.name;
+  setFormData({ ...formData, [name]: value });
+};
+
 
   const validatePassword = (password: string) => {
     const regex =
